@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# combustion: network
+
+if [ -z "$TTY" ]; then
+  TTY=/dev/tty0
+  echo "TTY was not set, use $TTY" >> "$TTY"
+fi
+
+echo "Combusting..." >> "$TTY"
+
+if ! [ -f config ]; then
+  echo "[combustion] script: missing config file" >> "$TTY"
+  exit 1
+fi
+
+#set -a # automatically export all variables
+source config
+#set +a
+
+## Mount /var and /home so user can be created smoothly
+# (already mounted via igniton)
+#mount /var
+#mount /home
+
+for module in $modules; do
+  echo "[combustion] Running module $module ..." >> "$TTY"
+  "./modules/$module" >> "$TTY"
+  echo "[combustion] Module $module done." >> "$TTY"
+done
+
+## Clear up mounts
+#umount /var
+#umount /home
+
+echo "Combustion done" >> "$TTY"

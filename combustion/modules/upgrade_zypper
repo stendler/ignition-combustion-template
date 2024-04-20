@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+echo "         ... dist upgrade"
+zypper --no-cd dup -y --auto-agree-with-product-licenses

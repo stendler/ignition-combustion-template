@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+echo "         ... installing packages"
+
+if [ -z "$combustion_install_packages" ]; then
+  exit 0
+fi
+
+# no-op for now
+# todo detect package manager and install packages

@@ -1,0 +1,43 @@
+variant: fcos
+version: 1.5.0
+
+storage:
+  filesystems:
+    - path: /home
+      device: /dev/disk/by-label/ROOT
+      format: btrfs
+      wipe_filesystem: false
+      mount_options:
+       - "subvol=/@/home"
+    # var is mounted by default: https://en.opensuse.org/Portal:MicroOS/Ignition#Mounts
+  trees:
+    - local: etc
+      path: /etc
+  files:
+    - path: /etc/hostname
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: "$ign_hostname"
+    - path: /etc/sudoers.d/$ign_user
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: "$ign_user ALL=(ALL) ALL" # NOPASSWD: ALL
+
+systemd:
+  units:
+    - name: firstbootreboot.service
+      enabled: true
+      contents_local: firstbootreboot.service
+
+passwd:
+  users:
+    - name: $ign_user
+      # hash, created with e.g. `openssl passwd -6` or `mkpasswd --method=yescrypt` from the whois package
+      password_hash: "$ign_password_hash"
+      ssh_authorized_keys:
+        - "$ign_ssh_public_key"
+      # ssh_authorized_keys_local:
+      #  - $ign_ssh_public_key_location
+

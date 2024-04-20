@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+# no-op
+# todo: detect package manager and run that

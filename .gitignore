@@ -1,0 +1,9 @@
+
+# user configurations
+*.env
+!example.env
+
+# generated files
+combustion/config
+files/etc/ssh/sshd_config.d/sshd_server.conf
+files/*.pub
