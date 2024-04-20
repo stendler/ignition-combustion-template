@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+echo "         ... install systemd ntdy service"
+
+cp systemd-ntfy-poweronoff/* /etc/systemd/system/
+
+if [ -n "$NTFY_TOPIC" ]; then
+  systemctl enable ntfy-startup@${NTFY_TOPIC}.service
+  systemctl enable ntfy-shutdown@${NTFY_TOPIC}.service
+fi
