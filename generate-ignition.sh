@@ -63,4 +63,4 @@ envsubst <templates/sshd_server.conf '$ign_sshd_port $ign_user' >files/etc/ssh/s
 
 # substitute these variables via sed and feed it into butane
 envsubst <templates/ignition.yaml '$ign_hostname $ign_user $ign_password_hash $ign_ssh_public_key' \
-  | $ign_butane_bin --pretty --strict --files-dir=files >ignition/config.ign
+  | $ign_butane_bin --pretty --strict --files-dir=files >disk/ignition/config.ign
