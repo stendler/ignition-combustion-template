@@ -24,6 +24,11 @@ storage:
       overwrite: true
       contents:
         inline: "$ign_user ALL=(ALL) ALL" # NOPASSWD: ALL
+    - path: /etc/vconsole.conf
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: KEYMAP=$ign_keymap
 
 systemd:
   units:
