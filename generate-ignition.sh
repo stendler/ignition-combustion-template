@@ -19,32 +19,37 @@ if ! command -v envsubst &> /dev/null; then
   exit 1
 fi
 
-# go through required env vars and ask for value if not set
+# source and export configuration
+env_file="${1:-.env}"
+if [ ! -f "$env_file" ]; then
+  echo "File '${env_file}' not found. Aborting..."
+  exit 1
+fi
+set -a
+source "$env_file"
+set +a
+
+
+# go through required env vars and abort if not present
 if [ -z "${ign_hostname}" ]; then
-  read -p "ign_hostname is not set. Set value: " ign_hostname
-  export ign_hostname
+  echo "ign_hostname not set. Aborting.."
+  exit 1
 fi
 
 if [ -z "${ign_user}" ]; then
-  read -p "ign_user is not set. Set value: " ign_user
-  export ign_user
+    echo "ign_user not set. Aborting.."
+    exit 1
 fi
 
 if [ -z "$ign_password_hash" ]; then
-  echo "No password hash set in ign_password_hash - generating a new one?"
-  if command -v mkpasswd &> /dev/null; then
-    export ign_password_hash=$(mkpasswd --method=yescrypt)
-  elif command -v openssl &> /dev/null; then
-    export ign_password_hash=$(openssl passwd -6)
-  else
-    echo "Neither mkpasswd nor openssl found for generating a password. Exiting."
+    echo "ign_password_hash not set. Aborting.."
     exit 1
-  fi
 fi
 
 if [ -z "$ign_ssh_public_key" ]; then
   if [ -z "${ign_ssh_public_key_location}" ]; then
-    read -p "ign_ssh_public_key_location is not set. Set value: " ign_ssh_public_key_location
+        echo "ign_ssh_public_key_location not set. Aborting.."
+        exit 1
   fi
   export ign_ssh_public_key=$(cat "$ign_ssh_public_key_location")
 fi
