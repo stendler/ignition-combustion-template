@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # determine butane binary
 if [ -z "$ign_butane_bin" ]; then
@@ -56,7 +56,7 @@ fi
 
 
 printf "\n---------\nUsing the following configuration:\n\n"
-env | grep ign_
+env | grep -e "ign_" -e "combustion_" | sort
 printf "\n---------\n"
 read -p "Continue with this configuration? [Y/n] " confirmation
 case $confirmation in
@@ -65,6 +65,8 @@ case $confirmation in
 esac
 
 envsubst <templates/sshd_server.conf '$ign_sshd_port $ign_user' >files/etc/ssh/sshd_config.d/sshd_server.conf
+
+envsubst <templates/combustion.conf >disk/combustion/config
 
 # substitute these variables via sed and feed it into butane
 envsubst <templates/ignition.yaml '$ign_hostname $ign_user $ign_password_hash $ign_ssh_public_key' \
