@@ -12,10 +12,12 @@ or put on a USB-drive with the label `ignition` to be supplied to a system on it
 
 - gettext for the `envsubst` command
 - butane (or podman/docker) to generate the ignition config 
-- guestfs-tools (to edit the qcow2 image) 
+- (optional) cdrtools for `mkisofs` to create an iso image with `generate-iso.sh`
 
 ## Usage
 
 Create a copy of `example.env` and fill its values.
-Run `./generate-ignition.sh` to generate the missing config files from the templates.
+Run `./generate-ignition.sh my.env` to generate the missing config files from the templates.
 
+The disks folder now contains everything ready to put into a filesystem with the label `ignition`. E.g. on a USB-drive.
+To create an ISO image, run `./generate-iso.sh ignition.iso`.

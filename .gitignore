@@ -10,3 +10,4 @@ files/*.pub
 
 # binaries
 *.qcow2
+*.iso
