@@ -2,6 +2,4 @@
 
 echo "         ... zypper install"
 
-# todo: possibly check for package managers?
-
 zypper install -y --auto-agree-with-product-licenses $combustion_install_packages
