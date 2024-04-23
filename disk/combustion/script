@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # combustion: network
 
+set -e
+
 if [ -z "$TTY" ]; then
   TTY=/dev/tty0
   echo "TTY was not set, use $TTY" >> "$TTY"
@@ -32,4 +34,5 @@ done
 #umount /var
 #umount /home
 
+set +e
 echo "Combustion done" >> "$TTY"
