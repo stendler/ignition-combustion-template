@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+# Instruct SELinux to allow sshd to run on a different port, than the default 22.
+# on opensuse: requires policycoreutils-python-utils
+
+semanage port -a -t ssh_port_t -p tcp $combustion_sshd_port
