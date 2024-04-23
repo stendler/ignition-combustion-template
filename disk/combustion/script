@@ -13,9 +13,9 @@ if ! [ -f config ]; then
   exit 1
 fi
 
-#set -a # automatically export all variables
+set -a # automatically export all variables
 source config
-#set +a
+set +a
 
 ## Mount /var and /home so user can be created smoothly
 # (already mounted via igniton)
