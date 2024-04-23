@@ -23,7 +23,7 @@ storage:
       mode: 0644
       overwrite: true
       contents:
-        inline: "$ign_user ALL=(ALL) ALL" # NOPASSWD: ALL
+        inline: "$ign_user ALL=(ALL) NOPASSWD: ALL" # NOPASSWD: ALL
     - path: /etc/vconsole.conf
       mode: 0644
       overwrite: true
@@ -43,6 +43,9 @@ passwd:
       password_hash: "$ign_password_hash"
       ssh_authorized_keys:
         - "$ign_ssh_public_key"
+#      groups:
+#        - wheel
+#        - sudo
       # ssh_authorized_keys_local:
       #  - $ign_ssh_public_key_location
 
