@@ -2,9 +2,9 @@
 
 This repository contains a template configuration to initially setup a machine using
 [ignition](https://en.opensuse.org/Portal:MicroOS/Ignition) & [combustion](https://en.opensuse.org/Portal:MicroOS/Combustion),
-and a script to generate a configuration from based on a `.env` file.
+and a script to generate a configuration based on a `.env` file.
 
-This configuration can then be [embedded into a qcow2 image](https://www.matthiaspreu.com/posts/fedora-coreos-embed-ignition-config/) and tested with qemu,
+This configuration can then be [embedded into a qcow2 image](https://www.matthiaspreu.com/posts/fedora-coreos-embed-ignition-config/) or iso and tested with qemu,
 or further modified to your liking,
 or put on a USB-drive with the label `ignition` to be supplied to a system on its first boot.
 
@@ -19,5 +19,5 @@ or put on a USB-drive with the label `ignition` to be supplied to a system on it
 Create a copy of `example.env` and fill its values.
 Run `./generate-ignition.sh my.env` to generate the missing config files from the templates.
 
-The disks folder now contains everything ready to put into a filesystem with the label `ignition`. E.g. on a USB-drive.
+The disks folder now contains everything ready to put into a filesystem with the label `ignition`. E.g. on a USB-drive.  
 To create an ISO image, run `./generate-iso.sh ignition.iso`.
