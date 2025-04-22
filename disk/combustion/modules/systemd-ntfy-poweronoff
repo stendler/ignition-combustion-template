@@ -11,11 +11,14 @@ sed --expression='s/journalctl/journalctl --user/' systemd-ntfy-poweronoff/ntfy-
 if [ -n "$NTFY_TOPIC" ]; then
   systemctl enable ntfy-startup@${NTFY_TOPIC}.service
   systemctl enable ntfy-shutdown@${NTFY_TOPIC}.service
+fi
+
+if [ -n "$NTFY_FAILURE_TOPIC" ]; then
   mkdir -p /etc/systemd/system/ntfy-failure@.service.d/
   mkdir -p /etc/systemd/user/ntfy-failure@.service.d/
   cat >/etc/systemd/system/ntfy-failure@.service.d/override.conf <<EOF
 [Service]
-Environment=NTFY_TOPIC=${NTFY_TOPIC}
+Environment=NTFY_TOPIC=${NTFY_FAILURE_TOPIC}
 EOF
   cp /etc/systemd/system/ntfy-failure@.service.d/override.conf /etc/systemd/user/ntfy-failure@.service.d/override.conf
   mkdir -p /etc/systemd/system/service.d/
