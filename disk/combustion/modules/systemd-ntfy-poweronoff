@@ -6,7 +6,7 @@ cp systemd-ntfy-poweronoff/ntfy-startup@.service /etc/systemd/system/
 cp systemd-ntfy-poweronoff/ntfy-shutdown@.service /etc/systemd/system/
 cp systemd-ntfy-poweronoff/ntfy-failure@.service /etc/systemd/system/
 # make sure the --user is used on the user level
-sed --expression='s/^Exec/#Exec/' --expression='s/^#Exec/Exec/' systemd-ntfy-poweronoff/ntfy-failure@.service > /etc/systemd/user/ntfy-failure@.service
+sed --expression='s/journalctl/journalctl --user/' systemd-ntfy-poweronoff/ntfy-failure@.service > /etc/systemd/user/ntfy-failure@.service
 
 if [ -n "$NTFY_TOPIC" ]; then
   systemctl enable ntfy-startup@${NTFY_TOPIC}.service
