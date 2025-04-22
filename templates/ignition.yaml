@@ -41,11 +41,8 @@ passwd:
     - name: $ign_user
       # hash, created with e.g. `openssl passwd -6` or `mkpasswd --method=yescrypt` from the whois package
       password_hash: "$ign_password_hash"
-      ssh_authorized_keys:
-        - "$ign_ssh_public_key"
 #      groups:
 #        - wheel
 #        - sudo
-      # ssh_authorized_keys_local:
-      #  - $ign_ssh_public_key_location
-
+      ssh_authorized_keys_local:
+        - "authorized_keys"

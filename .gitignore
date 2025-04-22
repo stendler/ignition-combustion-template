@@ -7,6 +7,7 @@
 disk/combustion/config
 files/etc/ssh/sshd_config.d/sshd_server.conf
 files/*.pub
+files/authorized_keys
 
 # binaries
 *.qcow2

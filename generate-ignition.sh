@@ -68,12 +68,13 @@ if [ -z "$ign_ssh_public_key" ]; then
         echo "ign_ssh_public_key_location not set. Aborting.."
         exit 1
   fi
-  export ign_ssh_public_key=$(cat "$ign_ssh_public_key_location")
 fi
 
 
 printf "\n---------\nUsing the following configuration:\n\n"
 env | grep -e "ign_" -e "combustion_" | sort
+printf "\nauthorized_keys:\n"
+cat ${ign_ssh_public_key_location[*]}
 printf "\n---------\n"
 read -p "Continue with this configuration? [Y/n] " confirmation
 case $confirmation in
@@ -85,6 +86,8 @@ envsubst <templates/sshd_server.conf '$ign_sshd_port $ign_user' >files/etc/ssh/s
 
 envsubst <templates/combustion.conf >disk/combustion/config
 
+cat ${ign_ssh_public_key_location[*]} >files/authorized_keys
+
 # substitute these variables via sed and feed it into butane
-envsubst <templates/ignition.yaml '$ign_hostname $ign_user $ign_password_hash $ign_ssh_public_key $ign_keymap' \
+envsubst <templates/ignition.yaml '$ign_hostname $ign_user $ign_password_hash $ign_keymap' \
   | $ign_butane_bin --pretty --strict --files-dir=files >disk/ignition/config.ign
