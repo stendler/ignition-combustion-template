@@ -4,8 +4,25 @@ echo "         ... install systemd ntfy service"
 
 cp systemd-ntfy-poweronoff/ntfy-startup@.service /etc/systemd/system/
 cp systemd-ntfy-poweronoff/ntfy-shutdown@.service /etc/systemd/system/
+cp systemd-ntfy-poweronoff/ntfy-failure@.service /etc/systemd/system/
+# make sure the --user is used on the user level
+sed --expression='s/^Exec/#Exec/' --expression='s/^#Exec/Exec/' systemd-ntfy-poweronoff/ntfy-failure@.service > /etc/systemd/user/ntfy-failure@.service
 
 if [ -n "$NTFY_TOPIC" ]; then
   systemctl enable ntfy-startup@${NTFY_TOPIC}.service
   systemctl enable ntfy-shutdown@${NTFY_TOPIC}.service
+  mkdir -p /etc/systemd/system/ntfy-failure@.service.d/
+  mkdir -p /etc/systemd/user/ntfy-failure@.service.d/
+  cat >/etc/systemd/system/ntfy-failure@.service.d/override.conf <<EOF
+[Service]
+Environment=NTFY_TOPIC=${NTFY_TOPIC}
+EOF
+  cp /etc/systemd/system/ntfy-failure@.service.d/override.conf /etc/systemd/user/ntfy-failure@.service.d/override.conf
+  mkdir -p /etc/systemd/system/service.d/
+  mkdir -p /etc/systemd/user/service.d/
+  cat >/etc/systemd/system/service.d/onfailure.conf <<EOF
+[Unit]
+OnFailure=ntfy-failure@%i.service
+EOF
+  cp /etc/systemd/system/service.d/onfailure.conf /etc/systemd/user/service.d/onfailure.conf
 fi
